@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "rootDir": ".",
+    "module": "Node16",
+    "resolveJsonModule": true,
+    "types": ["vite/client"],
+    "strict": true,
+    "sourceMap": true
+  },
+  "include": ["src/**/*", "vite.config.ts"],
+  "exclude": [
+    "node_modules/**/*"
+  ]
+}

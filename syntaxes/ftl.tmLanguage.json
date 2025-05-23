@@ -1,0 +1,695 @@
+{
+  "fileTypes": [
+    "ftl"
+  ],
+  "name": "Ftl",
+  "scopeName": "source.ftl",
+  "patterns": [{ "include": "#directives" }],
+  "repository": {
+    "directives": {
+      "patterns": [
+        {
+          "include": "#special-directive"
+        },
+        {
+          "include": "#directive"
+        },
+        {
+          "include": "#macro-call"
+        },
+        {
+          "include": "#comment"
+        },
+        {
+          "include": "#interpolation-value-expression"
+        }
+      ]
+    },
+    "special-directive": {
+      "patterns": [
+        {
+          "begin": "([\\[<]#list)\\s+(.*)\\s+(as)\\s+(\\w+)([\\]>])",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#variable-expression"
+                }
+              ]
+            },
+            "3": {
+              "name": "keyword"
+            },
+            "4": {
+              "name": "variable.other.constant"
+            },
+            "5": {
+              "name": "keyword"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#directives"
+            }
+          ],
+          "end": "([\\[<]/#list[\\]>])",
+          "endCaptures": {
+            "1": {
+              "name": "keyword"
+            }
+          }
+        },
+        {
+          "match": "(\\[#noparse\\]).*?(\\[/#noparse\\])",
+          "captures": {
+            "1": {
+              "name": "keyword"
+            },
+            "2": {
+              "name": "keyword"
+            }
+          }
+        },
+        {
+          "begin": "(\\[#noparse\\]).*",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword"
+            }
+          },
+          "end": "(\\[/#noparse\\])",
+          "endCaptures": {
+            "1": {
+              "name": "keyword"
+            }
+          }
+        }
+      ]
+    },
+    "directive": {
+      "patterns": [
+        {
+          "include": "#inline-directive"
+        },
+        {
+          "match": "([\\[<]#if)(.*)([\\]>])",
+          "captures": {
+            "1": {
+              "name": "keyword"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#variable-expression"
+                }
+              ]
+            },
+            "3": {
+              "name": "keyword"
+            }
+          }
+        },
+        {
+          "begin": "([\\[<]#if)\\s*(.*)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#variable-expression"
+                }
+              ]
+            }
+          },
+          "patterns": [
+            {
+              "include": "#directive-attribute"
+            }
+          ],
+          "end": "([\\]>])",
+          "endCaptures": {
+            "1": {
+              "name": "keyword"
+            }
+          }
+        },
+        {
+          "match": "([\\[<]#[a-zA-Z]+)(.*)([\\]>])",
+          "captures": {
+            "1": {
+              "name": "keyword"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#directive-attribute"
+                }
+              ]
+            },
+            "3": {
+              "name": "keyword"
+            }
+          }
+        },
+        {
+          "begin": "([\\[<]#[a-zA-Z]+)\\s*(.*)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#directive-attribute"
+                }
+              ]
+            }
+          },
+          "patterns": [
+            {
+              "include": "#directive-attribute"
+            }
+          ],
+          "end": "([\\]>])",
+          "endCaptures": {
+            "1": {
+              "name": "keyword"
+            }
+          }
+        },
+        {
+          "match": "[\\[<]/#[a-zA-Z]+[\\]>]",
+          "captures": {
+            "0": {
+              "name": "keyword"
+            }
+          }
+        }
+      ]
+    },
+    "directive-attribute": {
+      "patterns": [
+        {
+          "include": "#variable-expression"
+        }
+      ]
+    },
+    "variable-expression": {
+      "patterns": [
+        {
+          "include": "#string"
+        },
+        {
+          "include": "#attribute-access"
+        }
+      ]
+    },
+    "attribute-access": {
+      "patterns": [
+        {
+          "match": "([\\w_]+)\\s*(=)\\s*(.*)",
+          "captures": {
+            "1": {
+              "name": "entity.other.attribute-name"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "keyword.operator"
+                }
+              ]
+            },
+            "3": {
+              "patterns": [
+                {
+                  "include": "#variable-expression"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "match": "\\?\\?",
+          "name": "keyword.operator"
+        },
+        {
+          "match": "(\\()(.*)(\\))(.*)",
+          "captures": {
+            "1": {
+              "name": "variable.function"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#variable-expression"
+                }
+              ]
+            },
+            "3": {
+              "name": "variable.function"
+            },
+            "4": {
+              "patterns": [
+                {
+                  "include": "#attribute-access"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "match": "([\\w_]+)\\s*(->)\\s*(.*)",
+          "captures": {
+            "1": {
+              "name": "variable.parameter"
+            },
+            "2": {
+              "name": "keyword.operator"
+            },
+            "3": {
+              "patterns": [
+                {
+                  "include": "#variable-expression"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "match": "(\\?[\\w_]+)(.*)",
+          "captures": {
+            "1": {
+              "name": "variable.function"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#variable-expression"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "match": "(!)(.*)",
+          "captures": {
+            "1": {
+              "name": "keyword.operator"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#variable-expression"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "match": "([\\w_]+)(.*)",
+          "captures": {
+            "1": {
+              "name": "variable.other.constant"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#attribute-access"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "match": "(\\.)([\\w_]+)(.*)",
+          "captures": {
+            "1": {
+              "name": "keyword.operator"
+            },
+            "2": {
+              "name": "variable.other.constant"
+            },
+            "3": {
+              "patterns": [
+                {
+                  "include": "#attribute-access"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "match": "(\\[\\])(.*)",
+          "captures": {
+            "1": {
+              "name": "variable.other.constant"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#attribute-access"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "match": "(\\[)(.*)(\\])(.*)",
+          "captures": {
+            "1": {
+              "name": "keyword.operator"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#variable-expression"
+                }
+              ]
+            },
+            "3": {
+              "name": "keyword.operator"
+            },
+            "4": {
+              "patterns": [
+                {
+                  "include": "#attribute-access"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "inline-interpolation": {
+      "patterns": [
+        {
+          "match": "\\$\\{[^\\}]*\\$\\{.*\\}[^\\$\\{]*\\}",
+          "captures": {
+            "0": {
+              "patterns": [
+                {
+                  "match": "(\\$\\{)(.*)(\\})",
+                  "captures": {
+                    "1": {
+                      "name": "punctuation"
+                    },
+                    "2": {
+                      "patterns": [
+                        {
+                          "include": "#variable-expression"
+                        }
+                      ]
+                    },
+                    "3": {
+                      "name": "punctuation"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "match": "\\[=[^\\]]*\\[=.*\\][^\\[=]*\\]",
+          "captures": {
+            "0": {
+              "patterns": [
+                {
+                  "match": "(\\[=)(.*)(\\])",
+                  "captures": {
+                    "1": {
+                      "name": "punctuation"
+                    },
+                    "2": {
+                      "patterns": [
+                        {
+                          "include": "#variable-expression"
+                        }
+                      ]
+                    },
+                    "3": {
+                      "name": "punctuation"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "match": "(\\$\\{)(.*?)(\\})",
+          "captures": {
+            "1": {
+              "name": "punctuation"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#variable-expression"
+                }
+              ]
+            },
+            "3": {
+              "name": "punctuation"
+            }
+          }
+        },
+        {
+          "match": "(\\[=)(.*?)(\\])",
+          "captures": {
+            "1": {
+              "name": "punctuation"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#variable-expression"
+                }
+              ]
+            },
+            "3": {
+              "name": "punctuation"
+            }
+          }
+        }
+      ]
+    },
+    "interpolation-value-expression": {
+      "patterns": [
+        {
+          "include": "#inline-interpolation"
+        },
+        {
+          "begin": "\\$\\{",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.template-expression.begin.ftl"
+            }
+          },
+          "end": "\\}",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.template-expression.end.ftl"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#variable-expression"
+            }
+          ],
+          "contentName": "meta.embedded.line.ftl"
+        },
+        {
+          "begin": "\\[=",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.template-expression.begin.ftl"
+            }
+          },
+          "end": "\\]",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.template-expression.end.ftl"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#variable-expression"
+            }
+          ],
+          "contentName": "meta.embedded.line.ftl"
+        }
+      ]
+    },
+    "macro-call": {
+      "patterns": [
+        {
+          "include": "#inline-macro-call"
+        },
+        {
+          "match": "([\\[<]@[a-zA-Z\\.]*)(.*)(/?[\\]>])",
+          "captures": {
+            "1": {
+              "name": "variable.function"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#directive-attribute"
+                }
+              ]
+            },
+            "3": {
+              "name": "variable.function"
+            }
+          }
+        },
+        {
+          "begin": "([\\[<]@[a-zA-Z\\.]*)(.*)",
+          "beginCaptures": {
+            "1": {
+              "name": "variable.function"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#directive-attribute"
+                }
+              ]
+            }
+          },
+          "end": "(.*)(/?[\\]>])",
+          "endCaptures": {
+            "1": {
+              "patterns": [
+                {
+                  "include": "#variable-expression"
+                }
+              ]
+            },
+            "2": {
+              "name": "variable.function"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#directive-attribute"
+            }
+          ]
+        },
+        {
+          "match": "([\\[<])(/@)([a-zA-Z\\.]*)?([\\]>])",
+          "captures": {
+            "0": {
+              "name": "variable.function"
+            }
+          }
+        }
+      ]
+    },
+    "inline-macro-call": {
+      "patterns": [
+        {
+          "match": "([\\[<]@[a-zA-Z\\.]*)(.*?)([\\]>])(.*)([\\[<]/@[a-zA-Z\\.]*[\\]>])(.*)",
+          "captures": {
+            "1": {
+              "name": "variable.function"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#directive-attribute"
+                }
+              ]
+            },
+            "3": {
+              "name": "variable.function"
+            },
+            "4": {
+              "patterns": [
+                {
+                  "include": "#inline-macro-call"
+                },
+                {
+                  "include": "#inline-directive"
+                }
+              ]
+            },
+            "5": {
+              "name": "variable.function"
+            }
+          }
+        }
+      ]
+    },
+    "inline-directive": {
+      "patterns": [
+        {
+          "match": "([\\[<]#[a-zA-Z\\.]*)(.*?)([\\]>])(.*)([\\[<]/#[a-zA-Z\\.]*[\\]>])(.*)",
+          "captures": {
+            "1": {
+              "name": "keyword"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#directive-attribute"
+                }
+              ]
+            },
+            "3": {
+              "name": "keyword"
+            },
+            "4": {
+              "patterns": [
+                {
+                  "include": "#inline-macro-call"
+                },
+                {
+                  "include": "#inline-directive"
+                }
+              ]
+            },
+            "5": {
+              "name": "keyword"
+            }
+          }
+        }
+      ]
+    },
+    "string": {
+      "patterns": [
+        {
+          "begin": "\"",
+          "end": "\"",
+          "name": "string.quoted.double",
+          "patterns": [
+            {
+              "include": "#inline-interpolation"
+            }
+          ]
+        },
+        {
+          "begin": "'",
+          "end": "'",
+          "name": "string.quoted.single",
+          "patterns": [
+            {
+              "include": "#inline-interpolation"
+            }
+          ]
+        }
+      ]
+    },
+    "comment": {
+      "begin": "<#--",
+      "end": "-->",
+      "name": "comment.block"
+    }
+  }
+}

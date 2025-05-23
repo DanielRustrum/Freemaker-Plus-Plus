@@ -1,0 +1,52 @@
+on:
+  push:
+    tags:
+      - "*"
+
+name: Deploy Extension
+jobs:
+  start-notification:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: 'true'
+          token: ${{ secrets.ORG_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 21.7.3
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.6.0
+      - name: Install dependencies
+        run: pnpm i
+      - name: Notification for WeChat Org Group
+        run: node notification/index.mjs --type comment --title 开始
+  deploy:
+    needs: start-notification
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 21.7.3
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with: 
+          version: 9.6.0
+      - name: Install dependencies
+        run: pnpm i
+      - name: Publish to Visual Studio Marketplace
+        uses: HaaLeo/publish-vscode-extension@v1
+        with:
+          dependencies: false
+          pat: ${{ secrets.VS_MARKETPLACE_TOKEN }}
+          registryUrl: https://marketplace.visualstudio.com
+      - name: Notification to Org WeChat Group
+        if: success()
+        run: node notification/index.mjs
+      - name: Notification for WeChat Org Group
+        if: failure()
+        run: node notification/index.mjs --type warning --title 失败
+          
