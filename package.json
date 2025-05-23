@@ -3,7 +3,7 @@
   "name": "freemarker",
   "displayName": "Freemarker",
   "type": "commonjs",
-  "version": "0.14.1",
+  "version": "0.1.0",
   "description": "The freemarker template language support for Visual Studio Code. This extension provides syntax highlighting, snippets, and language support for freemarker templates.",
   "repository": "https://github.com/sj1-cn/freemarker-vscode",
   "categories": [
