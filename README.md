@@ -6,4 +6,4 @@
 
 ## Square Bracket Syntax `[]`
 
-![Square Bracket Syntax](image.png)
+![Square Bracket Syntax](./bracket-syntax.png)
