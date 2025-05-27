@@ -1,45 +1,74 @@
 {
-  "list": {
+  "assign[]": {
     "scope": "nebula-template",
-    "prefix": "list",
+    "prefix": "[assign",
+    "body": [
+      "[#assign $1]",
+      "  $2",
+      "[/#assign]"
+    ]
+  },
+  "assign": {
+    "scope": "nebula-template",
+    "prefix": "assign",
+    "body": [
+      "<#assign $1>",
+      "  $2",
+      "</#assign>"
+    ]
+  },
+  "list[]": {
+    "scope": "nebula-template",
+    "prefix": "[list",
     "body": [
       "[#list $1 as $2]",
       "  $2",
       "[/#list]"
     ]
   },
+  "list": {
+    "scope": "nebula-template",
+    "prefix": "list",
+    "body": [
+      "<#list $1 as $2>",
+      "  $2",
+      "</#list>"
+    ]
+  },
   "if": {
     "scope": "nebula-template",
     "prefix": "if",
+    "body": [
+      "<#if $1>",
+      "  $2",
+      "</#if>"
+    ]
+  },
+  "if[]": {
+    "scope": "nebula-template",
+    "prefix": "[if",
     "body": [
       "[#if $1]",
       "  $2",
       "[/#if]"
     ]
   },
-  "svelte-if": {
-    "scope": "nebula-template",
-    "prefix": "if",
-    "body": [
-      "{#if $1}",
-      "  $2",
-      "{/if}"
-    ]
-  },
   "macro": {
     "scope": "nebula-template",
     "prefix": "macro",
     "body": [
+      "<#macro $1>",
+      "  $2",
+      "</#macro>"
+    ]
+  },
+  "macro[]": {
+    "scope": "nebula-template",
+    "prefix": "[macro",
+    "body": [
       "[#macro $1]",
       "  $2",
       "[/#macro]"
-    ]
-  },
-  "js-log": {
-    "scope": "nebula-template",
-    "prefix": "log",
-    "body": [
-      "console.log($1)"
     ]
   }
 }
