@@ -4,7 +4,20 @@
   ],
   "name": "Ftl",
   "scopeName": "source.ftl",
-  "patterns": [{ "include": "#directives" }],
+  "patterns": [
+    {
+      "include": "#directives"
+    },
+    {
+      "include": "#embedded-html"
+    },
+    {
+      "include": "#embedded-js"
+    },
+    {
+      "include": "#embedded-css"
+    }
+  ],
   "repository": {
     "directives": {
       "patterns": [
@@ -53,6 +66,9 @@
           "patterns": [
             {
               "include": "#directives"
+            },
+            {
+              "include": "#embedded-html"
             }
           ],
           "end": "([\\[<]/#list[\\]>])",
@@ -206,6 +222,28 @@
         },
         {
           "include": "#attribute-access"
+        },
+        {
+          "begin": "\\{",
+          "end": "\\}",
+          "name": "meta.map.literal.ftl",
+          "patterns": [
+            {
+              "match": "\"[^\"]+\"(?=\\s*:)",
+              "name": "string.key.ftl"
+            },
+            {
+              "match": ":",
+              "name": "punctuation.separator.key-value.ftl"
+            },
+            {
+              "match": "\\[.*?\\]",
+              "name": "meta.sequence.array.ftl"
+            },
+            {
+              "include": "#variable-expression"
+            }
+          ]
         }
       ]
     },
@@ -689,7 +727,53 @@
     "comment": {
       "begin": "<#--",
       "end": "-->",
-      "name": "comment.block"
+      "name": "comment.block",
+      "contentName": "comment.block.ftl"
+    },
+    "embedded-html": {
+      "patterns": [
+        {
+          "include": "text.html.basic"
+        }
+      ]
+    },
+    "embedded-js": {
+      "begin": "<script\\b[^>]*>",
+      "end": "</script>",
+      "contentName": "meta.embedded.block.js",
+      "patterns": [
+        {
+          "include": "#directives"
+        },
+        {
+          "include": "source.js"
+        }
+      ]
+    },
+    "embedded-css": {
+      "begin": "<style\\b[^>]*>",
+      "end": "</style>",
+      "contentName": "meta.embedded.block.css",
+      "patterns": [
+        {
+          "begin": "<#--",
+          "end": "-->",
+          "name": "comment.block.ftl"
+        },
+        {
+          "begin": "<!--",
+          "end": "-->",
+          "name": "comment.block.html"
+        },
+        {
+          "begin": "(?:(?!<#--|<!--)[\\s\\S])*?",
+          "patterns": [
+            {
+              "include": "source.css"
+            }
+          ]
+        }
+      ]
     }
   }
 }

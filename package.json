@@ -1,10 +1,10 @@
 {
   "publisher": "sj1cn",
-  "name": "freemarker-plus",
-  "displayName": "Freemarker Plus",
+  "name": "freemarker-plus-plus",
+  "displayName": "Freemarker Plus Plus",
   "type": "commonjs",
   "version": "0.2.1",
-  "description": "The freemarker template language support for Visual Studio Code. This extension provides syntax highlighting, snippets, and language support for freemarker templates.",
+  "description": "Forked From the Freemaker Plus Plugin",
   "repository": "https://github.com/sj1-cn/freemarker-vscode",
   "categories": [
     "Other",
@@ -20,13 +20,13 @@
   "contributes": {
     "snippets": [
       {
-        "language": "freemarker-template",
+        "language": "freemarker",
         "path": "./snippets/ftl.json"
       }
     ],
     "languages": [
       {
-        "id": "freemarker-template",
+        "id": "freemarker",
         "extensions": [
           ".ftl"
         ],
@@ -35,7 +35,7 @@
     ],
     "grammars": [
       {
-        "language": "freemarker-template",
+        "language": "freemarker",
         "scopeName": "source.ftl",
         "path": "./syntaxes/ftl.tmLanguage.json"
       },
@@ -47,8 +47,20 @@
           "source.mdx"
         ],
         "embeddedLanguages": {
-          "meta.embedded.block.nsl": "ftl"
+          "meta.embedded.block.nsl": "ftl",
+          "source.js": "javascript",
+          "source.css": "css",
+          "text.html.basic": "html"
         }
+      },
+      {
+        "scopeName": "freemarker.injection",
+        "path": "./syntaxes/freemarker-injection.tmLanguage.json",
+        "injectTo": [
+          "source.js",
+          "source.css",
+          "text.html.basic"
+        ]
       }
     ]
   },

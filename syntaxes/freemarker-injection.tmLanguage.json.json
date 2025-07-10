@@ -1,0 +1,34 @@
+{
+  "scopeName": "freemarker.injection",
+  "injectionSelector": "L:source.js, L:source.css, L:text.html.basic -comment",
+  "patterns": [
+    { "include": "#freemarker" }
+  ],
+  "repository": {
+    "freemarker": {
+      "patterns": [
+        {
+          "name": "meta.directive.ftl",
+          "begin": "<#",
+          "end": ">",
+          "patterns": [
+            { "match": "[^>]+", "name": "meta.directive.ftl.inner" }
+          ]
+        },
+        {
+          "name": "meta.interpolation.ftl",
+          "begin": "\\$\\{",
+          "end": "\\}",
+          "patterns": [
+            { "match": "[^\\}]+", "name": "meta.interpolation.ftl.inner" }
+          ]
+        },
+        {
+          "name": "comment.block.ftl",
+          "begin": "<#--",
+          "end": "-->"
+        }
+      ]
+    }
+  }
+}
