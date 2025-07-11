@@ -3,9 +3,9 @@
   "name": "freemarker-plus-plus",
   "displayName": "Freemarker Plus Plus",
   "type": "commonjs",
-  "version": "0.2.1",
+  "version": "0.0.1",
   "description": "Forked From the Freemaker Plus Plugin",
-  "repository": "https://github.com/sj1-cn/freemarker-vscode",
+  "repository": "https://github.com/DanielRustrum/Freemaker-Plus-Plus",
   "categories": [
     "Other",
     "Snippets",
