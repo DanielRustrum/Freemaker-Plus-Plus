@@ -9,13 +9,13 @@
       "include": "#directives"
     },
     {
-      "include": "#embedded-html"
-    },
-    {
       "include": "#embedded-js"
     },
     {
       "include": "#embedded-css"
+    },
+    {
+      "include": "#embedded-html"
     }
   ],
   "repository": {
@@ -733,7 +733,13 @@
     "embedded-html": {
       "patterns": [
         {
-          "include": "text.html.basic"
+          "include": "text.html.basic",
+          "applyEndPatternLast": true
+        },
+        {
+          "begin": "<(script|style)\\b",
+          "end": "</\\1>",
+          "name": "invalid.block.html.filtered"
         }
       ]
     },
@@ -756,24 +762,17 @@
       "contentName": "meta.embedded.block.css",
       "patterns": [
         {
-          "begin": "<#--",
-          "end": "-->",
-          "name": "comment.block.ftl"
+          "include": "#freemarker-comment"
         },
         {
-          "begin": "<!--",
-          "end": "-->",
-          "name": "comment.block.html"
-        },
-        {
-          "begin": "(?:(?!<#--|<!--)[\\s\\S])*?",
-          "patterns": [
-            {
-              "include": "source.css"
-            }
-          ]
+          "include": "source.css"
         }
       ]
+    },
+    "freemarker-comment": {
+      "begin": "<#--",
+      "end": "-->",
+      "name": "comment.block.ftl"
     }
   }
 }

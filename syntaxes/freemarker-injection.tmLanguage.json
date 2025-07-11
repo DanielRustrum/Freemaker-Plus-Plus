@@ -1,0 +1,18 @@
+{
+  "scopeName": "freemarker.injection",
+  "injectionSelector": "L:source.js, L:source.css, L:text.html.basic -comment",
+  "patterns": [
+    { "include": "#freemarker" }
+  ],
+  "repository": {
+    "freemarker": {
+      "patterns": [
+        {
+          "name": "comment.block.ftl",
+          "begin": "<#--",
+          "end": "-->"
+        }
+      ]
+    }
+  }
+}

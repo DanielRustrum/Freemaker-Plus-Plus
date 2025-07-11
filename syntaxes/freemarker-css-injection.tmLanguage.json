@@ -1,0 +1,11 @@
+{
+  "scopeName": "freemarker.css.injection",
+  "injectionSelector": "L:text.html.basic",
+  "patterns": [
+    {
+      "begin": "<#--",
+      "end": "-->",
+      "name": "comment.block.ftl"
+    }
+  ]
+}

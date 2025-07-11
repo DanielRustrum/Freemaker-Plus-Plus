@@ -1,5 +1,5 @@
 {
-  "publisher": "danieltrustrum",
+  "publisher": "FreemakerPlusPlus",
   "name": "freemarker-plus-plus",
   "displayName": "Freemarker Plus Plus",
   "type": "commonjs",
@@ -30,7 +30,11 @@
         "extensions": [
           ".ftl"
         ],
-        "configuration": "./syntaxes/ftl-language-configuration.json"
+        "configuration": "./syntaxes/ftl-language-configuration.json",
+        "icon": {
+          "light": "./resources/icon.png",
+          "dark": "./resources/icon.png"
+        }
       }
     ],
     "grammars": [
@@ -54,27 +58,28 @@
         }
       },
       {
-        "scopeName": "freemarker.injection",
-        "path": "./syntaxes/freemarker-injection.tmLanguage.json",
-        "injectTo": [
-          "source.js",
-          "source.css",
-          "text.html.basic"
-        ]
+        "path": "./syntaxes/freemarker-css-injection.tmLanguage.json",
+        "scopeName": "freemarker.css.injection",
+        "injectTo": ["text.html.basic"]
       }
     ]
   },
   "scripts": {
     "vscode:prepublish": "pnpm run package",
+    "publish": "vsce package && vsce publish",
     "package": "vite build",
     "lint": "eslint",
     "build:watch": "vite build -w",
     "prepare": "husky"
   },
+  "dependencies": {
+    "vscode": "^1.1.37"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^3.9.2",
     "@types/node": "20.x",
-    "@types/vscode": "^1.89.0",
+    "@types/vscode": "^1.102.0",
+    "@vscode/vsce": "^3.6.0",
     "eslint": "^9.13.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.2.10",
